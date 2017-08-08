@@ -15,7 +15,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.onecode.s3.R;
+import com.s3.R;
 import com.s3.callback.S3BroadCast;
 import com.s3.model.S3BucketData;
 import com.s3.model.S3Credentials;
