@@ -58,10 +58,14 @@ public class S3UploadService extends IntentService {
         intent.setAction(ACTION_UPLOAD);
         Bundle bundle = new Bundle();
         bundle.putSerializable(EXTRA_S3_BUCKET_DATA, s3BucketData);
-        intent.putExtra(EXTRA_S3_BUCKET_DATA, bundle);
-        intent.putExtra(EXTRA_FILE, s3BucketData.getKey());
-        intent.putExtra(EXTRA_DELETE_FILE, s3BucketData.isDeleteAfterUse());
-        intent.putExtra(EXTRA_S3_CALLBACK, s3Callback);
+//        intent.putExtra(EXTRA_S3_BUCKET_DATA, bundle);
+//        intent.putExtra(EXTRA_FILE, s3BucketData.getKey());
+//        intent.putExtra(EXTRA_DELETE_FILE, s3BucketData.isDeleteAfterUse());
+//        intent.putExtra(EXTRA_S3_CALLBACK, s3Callback);
+        bundle.putSerializable(EXTRA_FILE, s3BucketData.getKey());
+        bundle.putBoolean(EXTRA_DELETE_FILE, s3BucketData.isDeleteAfterUse());
+        bundle.putSerializable(EXTRA_S3_CALLBACK, s3Callback);
+        intent.putExtras(bundle);
         context.startService(intent);
     }
 
