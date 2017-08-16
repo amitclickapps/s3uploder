@@ -16,6 +16,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.google.gson.Gson;
 import com.s3.R;
 import com.s3.callback.S3BroadCast;
 import com.s3.model.S3BucketData;
@@ -57,11 +58,8 @@ public class S3UploadService extends IntentService {
         Intent intent = new Intent(context, S3UploadService.class);
         intent.setAction(ACTION_UPLOAD);
         Bundle bundle = new Bundle();
-        //bundle.putSerializable(EXTRA_S3_BUCKET_DATA, s3BucketData);
-//        intent.putExtra(EXTRA_S3_BUCKET_DATA, bundle);
-//        intent.putExtra(EXTRA_FILE, s3BucketData.getKey());
-//        intent.putExtra(EXTRA_DELETE_FILE, s3BucketData.isDeleteAfterUse());
-//        intent.putExtra(EXTRA_S3_CALLBACK, s3Callback);
+        String s3Bucket = new Gson().toJson(s3BucketData);
+        bundle.putString(EXTRA_S3_BUCKET_DATA, s3Bucket);
         bundle.putSerializable(EXTRA_FILE, s3BucketData.getKey());
         bundle.putBoolean(EXTRA_DELETE_FILE, s3BucketData.isDeleteAfterUse());
         bundle.putSerializable(EXTRA_S3_CALLBACK, s3Callback);
@@ -83,8 +81,8 @@ public class S3UploadService extends IntentService {
         if (intent == null) return;
         final String action = intent.getAction();
         if (!ACTION_UPLOAD.equals(action)) return;
-
-        S3BucketData s3BucketData = (S3BucketData) intent.getSerializableExtra(EXTRA_S3_BUCKET_DATA);
+        String s3BucketJson = intent.getStringExtra(EXTRA_S3_BUCKET_DATA);
+        S3BucketData s3BucketData = new Gson().fromJson(s3BucketJson, S3BucketData.class);
         File file = (File) intent.getSerializableExtra(EXTRA_FILE);
         boolean deleteFileAfter = intent.getBooleanExtra(EXTRA_DELETE_FILE, true);
         S3BroadCast s3Callback = (S3BroadCast) intent.getSerializableExtra(EXTRA_S3_CALLBACK);
