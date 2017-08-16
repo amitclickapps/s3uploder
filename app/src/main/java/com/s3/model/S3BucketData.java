@@ -35,7 +35,7 @@ public class S3BucketData implements Serializable {
         return deleteAfterUse;
     }
 
-    public static class Builder {
+    public static class Builder implements Serializable {
 
         private S3BucketData s3BucketData;
 
