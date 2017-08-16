@@ -1,15 +1,17 @@
 package com.s3.model;
 
+import android.os.Bundle;
+
 import java.io.Serializable;
 
 /**
  * Created by clickapps on 8/8/17.
  */
 
-public class S3Response implements Serializable {
+public class S3Response implements Serializable{
 
     private boolean status;
-    private Serializable extra;
+    private int extra;
     private String message;
 
 
@@ -21,11 +23,11 @@ public class S3Response implements Serializable {
         this.status = status;
     }
 
-    public Serializable getExtra() {
+    public int getExtra() {
         return extra;
     }
 
-    public void setExtra(Serializable extra) {
+    public void setExtra(int extra) {
         this.extra = extra;
     }
 

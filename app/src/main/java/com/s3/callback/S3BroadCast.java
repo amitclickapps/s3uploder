@@ -1,5 +1,7 @@
 package com.s3.callback;
 
+import android.os.Bundle;
+
 import java.io.Serializable;
 
 /*
@@ -11,10 +13,10 @@ import java.io.Serializable;
 public class S3BroadCast implements Serializable {
 
     private String actionCallback;
-    private Serializable extra;
+    private int extra;
     private S3Callback callback;
 
-    public S3BroadCast(String actionCallback, Serializable extra, S3Callback callback) {
+    public S3BroadCast(String actionCallback, int extra, S3Callback callback) {
         this.actionCallback = actionCallback;
         this.extra = extra;
         this.callback = callback;
@@ -24,7 +26,7 @@ public class S3BroadCast implements Serializable {
         return actionCallback;
     }
 
-    public Serializable getExtra() {
+    public int getExtra() {
         return extra;
     }
 
@@ -33,6 +35,6 @@ public class S3BroadCast implements Serializable {
     }
 
     public interface S3Callback {
-        void onProgressChanged(Serializable extra, long bytesCurrent, long bytesTotal);
+        void onProgressChanged(int extra, long bytesCurrent, long bytesTotal);
     }
 }
