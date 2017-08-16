@@ -2,7 +2,7 @@ package com.s3.model;
 
 import java.io.Serializable;
 
-public class S3Credentials {
+public class S3Credentials implements Serializable{
 
     private String accessKey;
     private String secretKey;
