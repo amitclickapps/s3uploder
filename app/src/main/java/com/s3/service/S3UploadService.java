@@ -3,6 +3,7 @@ package com.s3.service;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -22,6 +23,7 @@ import com.s3.model.S3Credentials;
 import com.s3.model.S3Response;
 
 import java.io.File;
+import java.io.Serializable;
 
 /*
 * It's important to understand that this service doesn't know ANYONE. It's decoupled from the
@@ -54,7 +56,9 @@ public class S3UploadService extends IntentService {
     public static void upload(Context context, S3BucketData s3BucketData, S3BroadCast s3Callback) {
         Intent intent = new Intent(context, S3UploadService.class);
         intent.setAction(ACTION_UPLOAD);
-        intent.putExtra(EXTRA_S3_BUCKET_DATA, s3BucketData);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(EXTRA_S3_BUCKET_DATA, s3BucketData);
+        intent.putExtra(EXTRA_S3_BUCKET_DATA, bundle);
         intent.putExtra(EXTRA_FILE, s3BucketData.getKey());
         intent.putExtra(EXTRA_DELETE_FILE, s3BucketData.isDeleteAfterUse());
         intent.putExtra(EXTRA_S3_CALLBACK, s3Callback);
