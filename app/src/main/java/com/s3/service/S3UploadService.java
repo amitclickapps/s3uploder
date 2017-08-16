@@ -57,7 +57,7 @@ public class S3UploadService extends IntentService {
         Intent intent = new Intent(context, S3UploadService.class);
         intent.setAction(ACTION_UPLOAD);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(EXTRA_S3_BUCKET_DATA, s3BucketData);
+        //bundle.putSerializable(EXTRA_S3_BUCKET_DATA, s3BucketData);
 //        intent.putExtra(EXTRA_S3_BUCKET_DATA, bundle);
 //        intent.putExtra(EXTRA_FILE, s3BucketData.getKey());
 //        intent.putExtra(EXTRA_DELETE_FILE, s3BucketData.isDeleteAfterUse());
