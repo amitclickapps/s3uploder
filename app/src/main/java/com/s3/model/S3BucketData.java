@@ -1,15 +1,21 @@
 package com.s3.model;
 
+import android.app.Dialog;
+
+import com.s3.callback.S3Callback;
+
 import java.io.File;
 import java.io.Serializable;
 
-public class S3BucketData implements Serializable {
+public class S3BucketData {
 
     private S3Credentials s3Credentials;
     private String region;
     private String bucket;
     private File key;
     private boolean deleteAfterUse = false;
+    private S3Callback s3Callback;
+    private Dialog dialog;
 
     private S3BucketData() {
     }
@@ -30,9 +36,16 @@ public class S3BucketData implements Serializable {
         return key;
     }
 
+    public S3Callback getS3Callback() {
+        return s3Callback;
+    }
 
     public boolean isDeleteAfterUse() {
         return deleteAfterUse;
+    }
+
+    public Dialog getDialog() {
+        return dialog;
     }
 
     public static class Builder implements Serializable {
@@ -66,6 +79,16 @@ public class S3BucketData implements Serializable {
 
         public Builder setDeleteFileAfterUse(boolean deleteFileAfterUse) {
             s3BucketData.deleteAfterUse = deleteFileAfterUse;
+            return this;
+        }
+
+        public Builder setS3Callback(S3Callback callback) {
+            s3BucketData.s3Callback = callback;
+            return this;
+        }
+
+        public Builder progressDialog(Dialog dialog) {
+            s3BucketData.dialog = dialog;
             return this;
         }
 
