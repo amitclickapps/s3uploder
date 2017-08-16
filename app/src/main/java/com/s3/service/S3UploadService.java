@@ -13,6 +13,8 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -166,6 +168,7 @@ public class S3UploadService extends IntentService {
         BasicAWSCredentials credentials = new BasicAWSCredentials(s3Credentials.getAccessKey(),
                 s3Credentials.getSecretKey());
         AmazonS3Client s3 = new AmazonS3Client(credentials);
+        s3.setRegion(Region.getRegion(Regions.fromName(s3BucketData.getRegion())));
         TransferUtility transferUtility = new TransferUtility(s3, this);
         return transferUtility;
     }
