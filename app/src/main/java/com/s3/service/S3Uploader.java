@@ -1,6 +1,5 @@
 package com.s3.service;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -27,13 +26,10 @@ import java.io.File;
 
 public class S3Uploader {
     private S3Uploader() {
-
     }
 
-    private Context context;
 
-    public S3Uploader(@NonNull Context context, @NonNull S3BucketData s3BucketData) {
-        this.context = context;
+    public S3Uploader(@NonNull S3BucketData s3BucketData) {
         handleUpload(s3BucketData);
     }
 
@@ -111,12 +107,12 @@ public class S3Uploader {
         BasicAWSCredentials credentials = new BasicAWSCredentials(s3Credentials.getAccessKey(),
                 s3Credentials.getSecretKey());
         AmazonS3Client s3 = new AmazonS3Client(credentials);
-        return new TransferUtility(s3, this.context);
+        return new TransferUtility(s3, s3BucketData.getContext());
     }
 //    endregion
 
     //    region PutObjectRequest creation
-    private PutObjectRequest buildPor(S3BucketData s3BucketData
+    private PutObjectRequest buildPor(final S3BucketData s3BucketData
     ) {
 
         final String bucket = s3BucketData.getBucket();
@@ -125,7 +121,7 @@ public class S3Uploader {
 
         final PutObjectRequest por = new PutObjectRequest(bucket, file.getName(), file);
         por.setGeneralProgressListener(new ProgressListener() {
-            final String url = String.format(context.getString(R.string.s3_format_url), bucket, file.getPath());
+            final String url = String.format(s3BucketData.getContext().getString(R.string.s3_format_url), bucket, file.getPath());
             private long uploadStartTime;
 
             @Override
@@ -140,7 +136,7 @@ public class S3Uploader {
                             double fileSize = file.length() / 1000.0;
                             double uploadDuration = uploadDurationMillis;
                             double uploadSpeed = bytesPerSecond / 1000.0;
-                            Log.i(getClass().getSimpleName(), String.format(context.getString(R.string.s3_format_uploaded), fileSize, uploadDuration, uploadSpeed));
+                            Log.i(getClass().getSimpleName(), String.format(s3BucketData.getContext().getString(R.string.s3_format_uploaded), fileSize, uploadDuration, uploadSpeed));
                         }
 
                         if (deleteFileAfter) {
@@ -148,7 +144,7 @@ public class S3Uploader {
                         }
                     } else if (progressEvent.getEventCode() == ProgressEvent.FAILED_EVENT_CODE) {
                         if (BuildConfig.DEBUG) {
-                            Log.e(getClass().getSimpleName(), String.format(context.getString(R.string.s3_format_upload_failed), url));
+                            Log.e(getClass().getSimpleName(), String.format(s3BucketData.getContext().getString(R.string.s3_format_upload_failed), url));
                         }
                     }
                 } catch (Exception excp) {
