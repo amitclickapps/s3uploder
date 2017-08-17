@@ -1,6 +1,7 @@
 package com.s3.service;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -10,8 +11,11 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.s3.BuildConfig;
 import com.s3.R;
@@ -107,6 +111,9 @@ public class S3Uploader {
         BasicAWSCredentials credentials = new BasicAWSCredentials(s3Credentials.getAccessKey(),
                 s3Credentials.getSecretKey());
         AmazonS3Client s3 = new AmazonS3Client(credentials);
+        if (!TextUtils.isEmpty(s3BucketData.getRegion())) {
+            s3.setRegion(Region.getRegion(Regions.fromName(s3BucketData.getRegion())));
+        }
         return new TransferUtility(s3, s3BucketData.getContext());
     }
 //    endregion
@@ -155,6 +162,8 @@ public class S3Uploader {
             }
         });
         por.setCannedAcl(CannedAccessControlList.PublicRead);
+        ObjectMetadata omd = new ObjectMetadata();
+        por.setMetadata(omd);
         return por;
     }
 }
