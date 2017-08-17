@@ -14,7 +14,7 @@ public class S3BucketData {
 
     private S3Credentials s3Credentials;
     private String region;
-    private String bucket;
+    private String bucket, bucketFolder;
     private File key;
     private boolean deleteAfterUse = false;
     private S3Callback s3Callback;
@@ -56,6 +56,10 @@ public class S3BucketData {
         return context;
     }
 
+    public String getBucketFolder() {
+        return bucketFolder;
+    }
+
     public static class Builder implements Serializable {
 
         private S3BucketData s3BucketData;
@@ -77,6 +81,11 @@ public class S3BucketData {
 
         public Builder setBucket(@NonNull String bucket) {
             s3BucketData.bucket = bucket;
+            return this;
+        }
+
+        public Builder setBucketFolder(@NonNull String bucketFolder) {
+            s3BucketData.bucketFolder = bucketFolder;
             return this;
         }
 
