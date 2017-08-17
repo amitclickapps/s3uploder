@@ -53,31 +53,28 @@ public class S3Uploader {
     private void handleUpload(final S3BucketData s3BucketData) {
         TransferUtility transferUtility = setUpAmazonClient(s3BucketData);
         PutObjectRequest po = buildPor(s3BucketData);
-        if (s3BucketData.getDialog() != null
-                && !s3BucketData.getDialog().isShowing()) {
-            s3BucketData.getDialog().show();
-        }
         final TransferObserver observer = transferUtility.upload(
                 po.getBucketName(),
-                s3BucketData.getKey().getName(),
+                s3BucketData.getFileName(),
                 po.getFile(), po.getMetadata(), po.getCannedAcl()
         );
         observer.setTransferListener(new TransferListener() {
-            final String url = String.format(s3BucketData.getContext().getString(R.string.s3_format_url), s3BucketData.getBucket(), s3BucketData.getBucketFolder(), s3BucketData.getKey().getName());
+            final String url = String.format(s3BucketData.getContext().getString(R.string.s3_format_url),
+                    s3BucketData.getBucket(), s3BucketData.getBucketFolder(), s3BucketData.getFileName());
             private long uploadStartTime;
 
             @Override
             public void onStateChanged(int id, TransferState state) {
 //        It's only when the s3Callback provided isn't null that we will send the broadcast message
-                if (s3BucketData.getDialog() != null
-                        && s3BucketData.getDialog().isShowing()) {
-                    s3BucketData.getDialog().dismiss();
-                }
                 if (s3BucketData.getS3Callback() == null) {
                     return;
                 }
                 switch (state) {
                     case COMPLETED:
+                        if (s3BucketData.getDialog() != null
+                                && s3BucketData.getDialog().isShowing()) {
+                            s3BucketData.getDialog().dismiss();
+                        }
                         if (s3BucketData.isDeleteAfterUse()) {
                             s3BucketData.getKey().delete();
                         }
@@ -85,9 +82,17 @@ public class S3Uploader {
                         break;
                     case CANCELED:
                     case FAILED:
+                        if (s3BucketData.getDialog() != null
+                                && s3BucketData.getDialog().isShowing()) {
+                            s3BucketData.getDialog().dismiss();
+                        }
                         s3BucketData.getS3Callback().onResult(false, state.toString(), s3BucketData);
                         break;
                     case IN_PROGRESS:
+                        if (s3BucketData.getDialog() != null
+                                && !s3BucketData.getDialog().isShowing()) {
+                            s3BucketData.getDialog().show();
+                        }
                         uploadStartTime = System.currentTimeMillis();
                         break;
                     default:
@@ -154,10 +159,11 @@ public class S3Uploader {
         }
         omd.setContentLength(file.length());
         PutObjectRequest por = new PutObjectRequest(
-                bucket, file.getName(), file);
+                bucket, s3BucketData.getFileName(), file);
         por.setMetadata(omd);
         por.setGeneralProgressListener(new ProgressListener() {
-            final String url = String.format(s3BucketData.getContext().getString(R.string.s3_format_url), s3BucketData.getBucket(), s3BucketData.getBucketFolder(), file.getPath());
+            final String url = String.format(s3BucketData.getContext().getString(R.string.s3_format_url),
+                    s3BucketData.getBucket(), s3BucketData.getBucketFolder(), s3BucketData.getFileName());
             private long uploadStartTime;
 
             @Override
