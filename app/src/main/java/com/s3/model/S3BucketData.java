@@ -62,6 +62,7 @@ public class S3BucketData {
 
         public Builder(@NonNull Context context) {
             s3BucketData = new S3BucketData();
+            s3BucketData.context = context;
         }
 
         public Builder setCredentials(@NonNull S3Credentials s3Credentials) {
