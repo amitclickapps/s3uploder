@@ -41,7 +41,7 @@ Download
 Add the JitPack repository to your root build.gradle:[![](https://jitpack.io/v/amitclickapps/s3uploder.svg)](https://jitpack.io/#amitclickapps/s3uploder)
 
 
-```groovy
+```
 	allprojects {
 		repositories {
 			maven { url "https://jitpack.io" }
@@ -49,9 +49,9 @@ Add the JitPack repository to your root build.gradle:[![](https://jitpack.io/v/a
 	}
 ```
 Add the Gradle dependency:
-```groovy
+```
 	dependencies {
-		compile 'com.github.amitclickapps:s3uploder:1.0.3'
+		compile 'com.github.amitclickapps:s3uploder:latest'
 	}
 ```
 Declare S3UploadService in your manifest:
