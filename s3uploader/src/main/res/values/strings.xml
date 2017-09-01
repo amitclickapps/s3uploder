@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">s3</string>
+
+    <string name="s3_system_property">com.amazonaws.services.s3.disableGetObjectMD5Validation</string>
+    <string name="s3_format_url">https://%1$s.s3.amazonaws.com/%2$s/%3$s</string>
+    <string name="s3_format_uploaded">Uploaded %1$,.2f KB in %2$,.2fms (%3$,.2f KBps)</string>
+    <string name="s3_format_upload_failed">Upload failed for %1$s</string>
+</resources>
