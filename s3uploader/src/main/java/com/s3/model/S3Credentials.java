@@ -1,22 +1,20 @@
 package com.s3.model;
 
-import java.io.Serializable;
-
 public class S3Credentials {
 
-    private String accessKey;
-    private String secretKey;
+    private static String accessKey;
+    private static String secretKey;
 
     public S3Credentials(String accessKey, String secretKey) {
         this.accessKey = accessKey;
         this.secretKey = secretKey;
     }
 
-    public String getAccessKey() {
+    public static String getAccessKey() {
         return accessKey;
     }
 
-    public String getSecretKey() {
+    public static String getSecretKey() {
         return secretKey;
     }
 
