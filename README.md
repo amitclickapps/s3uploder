@@ -5,7 +5,7 @@ Usage
 --------
 Build an instance of S3BucketData and make a call to S3UploadService.upload():
 ```
-         new S3Credentials("AKIAIWVON7VEUPCSLIVA", "8wl6DYeRYwsLz3qSYUiNzC6rGqt08v7wLpB2bdvw");
+         new S3Credentials("accessKey", "secretKey");
                      new S3BucketData.Builder(this)
                              .setBucket("algarage")
                              .setBucketFolder("dev")
