@@ -12,7 +12,6 @@ import java.io.Serializable;
 
 public class S3BucketData {
 
-    private S3Credentials s3Credentials;
     private String region;
     private String bucket, bucketFolder, fileName;
     private File key;
@@ -22,10 +21,6 @@ public class S3BucketData {
     private Context context;
 
     private S3BucketData() {
-    }
-
-    public S3Credentials getS3Credentials() {
-        return s3Credentials;
     }
 
     public String getRegion() {
@@ -71,11 +66,6 @@ public class S3BucketData {
         public Builder(@NonNull Context context) {
             s3BucketData = new S3BucketData();
             s3BucketData.context = context;
-        }
-
-        public Builder setCredentials(@NonNull S3Credentials s3Credentials) {
-            s3BucketData.s3Credentials = s3Credentials;
-            return this;
         }
 
         public Builder setRegion(@NonNull String region) {

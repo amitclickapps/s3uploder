@@ -16,5 +16,5 @@ public interface S3Callback {
 
     void onProgressChanged(int extra, long bytesCurrent, long bytesTotal);
 
-    void onResult(boolean status, String message, S3BucketData s3BucketData);
+    void onResult(boolean status, String uploadedUrl, S3BucketData s3BucketData);
 }

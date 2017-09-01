@@ -131,9 +131,8 @@ public class S3Uploader {
     //    region amazon client setup
     private TransferUtility setUpAmazonClient(S3BucketData s3BucketData) {
 
-        S3Credentials s3Credentials = s3BucketData.getS3Credentials();
-        BasicAWSCredentials credentials = new BasicAWSCredentials(s3Credentials.getAccessKey(),
-                s3Credentials.getSecretKey());
+        BasicAWSCredentials credentials = new BasicAWSCredentials(S3Credentials.getAccessKey(),
+                S3Credentials.getSecretKey());
         AmazonS3Client s3 = new AmazonS3Client(credentials);
         if (!TextUtils.isEmpty(s3BucketData.getRegion())) {
             s3.setRegion(Region.getRegion(Regions.fromName(s3BucketData.getRegion())));
